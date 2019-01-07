@@ -1,0 +1,46 @@
+<mongoChangeLog>
+    <changeSet changeId="ChangeSet-001" author="lucianoneucamp@gmail.com">
+        <!-- create and insert vagas initial data -->
+        <script>
+            db.vagas.insert(
+            [{
+            "_id" : ObjectId("5c2d4a728afb1841c8aaa538"),
+            "empresa" : "Acme co",
+            "titulo" : "Engenheiro de Software",
+            "localizacao":"C",
+            "nivel" : 4,
+            "_class" : "co.acme.vagasapi.domain.Vaga"
+            }]);
+        </script>
+        <!-- create and insert pessoas initial data -->
+        <script>
+            db.pessoas.insert(
+            [{
+            "_id" : ObjectId("5c2d4a728afb1841c8aaa536"),
+            "nome" : "Luciano Neucamp",
+            "profissao" : "Eng. de Software",
+            "nivel" : 3,
+            "localizacao":"A",
+            "_class" : "co.acme.vagasapi.domain.Pessoa"
+            }]);
+        </script>
+        <!-- create and insert candidaturas initial data -->
+        <script>
+            db.candidaturas.insert(
+            [{
+            "_id" : ObjectId("5c2d46928afb183f52a23944"),
+            pontuacao: 90,
+            "vaga" : {
+            "$ref" : "vagas",
+            "$id" : ObjectId("5c2d4a728afb1841c8aaa538")
+            },
+            "pessoa" : {
+            "$ref" : "pessoas",
+            "$id" : ObjectId("5c2d4a728afb1841c8aaa536")
+            },
+            "_class" : "co.acme.vagasapi.domain.Candidatura"
+            }]);
+        </script>
+
+    </changeSet>
+</mongoChangeLog>

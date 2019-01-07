@@ -1,0 +1,26 @@
+version: '2.1'
+services:
+    vagas_api:
+        build: .
+        container_name: "vagas-api"
+        image: "vagas-api:latest"
+        ports:
+            - 10001:10001
+        environment:
+            - MONGO_URL=mongodb://mongodb/vagas
+        links:
+            - mongodb
+        depends_on:
+            mongodb:
+              condition: service_healthy
+    mongodb:
+        container_name: "mongodbcompose"
+        hostname: "mongodb"
+        image: 'bitnami/mongodb:latest'
+        environment:
+            - MONGODB_REPLICA_SET_MODE=primary
+        healthcheck:
+            test: echo 'db.stats().ok' | mongo localhost:27017/vagas --quiet
+            interval: 10s
+            timeout: 10s
+            retries: 12
